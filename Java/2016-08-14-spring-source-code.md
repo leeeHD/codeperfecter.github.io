@@ -3,6 +3,7 @@
 
 RestTemplate相关
 	// HTTP请求方法枚举，其中的两个方法的写法非常简介，又非常实用
+    // 数据结构的使用耶相当到位
 	public enum HttpMethod {
 
       GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS, TRACE;
