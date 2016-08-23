@@ -1,0 +1,28 @@
+## java的静态变量
+
+今天我遇到一个问题：项目使用了spring框架。为了方便，我将几个接口参数名写常量[final static varibale]，放到一个类中单独管理。  
+之后发现有个参数名有误，修改之后重新运行，发现之前的那个值还在，查找问题花费了一些时间，最终将常量改成硬编码，即(CONST_VAL_A -> “val_a")，
+之前的那个值就变成新的值了。
+
+经过思考，问题可能在于Tomcat或者spring缓存了这个值，而这个值又是静态量；或者在其他子工程缓存了这个值。
+
+[Why are static variables considered evil?](http://stackoverflow.com/questions/7026507/why-are-static-variables-considered-evil)
+这个讨论详细讨论静态变量，无非这几点：  
+
+- 生命周期一直延续到程序终止，只有一种状态，难于控制其创建和销毁状态
+- 破坏了封装，增加了耦合
+- 加大了测试和调试的难度
+
+其中几个较为经典的解答摘录如下：
+
+  Static variables represent global state. That's hard to reason about and hard to test: 
+  if I create a new instance of an object, I can reason about its new state within tests. 
+  If I use code which is using static variables, it could be in any state - and anything could be modifying it.
+  
+  I could go on for quite a while, but the bigger concept to think about is that the tighter the scope of something, 
+  the easier it is to reason a
+  bout. We're good at thinking about small things, but it's hard to reason 
+  about the state of a million line system if there's no modularity. This applies to all sorts of things, by the way - 
+  not just static variables.
+  
+  不能因为static方便就乱用，有代价的。
